@@ -1,0 +1,206 @@
+<html>
+
+    <head>
+    
+        <title>Game!</title>
+        
+<!--        <script src="jquery2.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+              integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+              crossorigin="anonymous"></script>
+        
+        <style type="text/css">
+        
+            .mainDiv {
+    
+                height: 80vh;
+                
+            }
+            
+            .infoDiv {
+                
+                width: 20vw;
+                float: left;
+                text-align: center;
+                
+            }
+            
+            #mainHeader {
+                
+                font-size: 1000%;
+                text-align: center;
+                padding: 0px;
+                margin: 0px;
+                position: relative;
+                top: 45%;
+                color: orangered;
+                display: none;
+                
+            }
+            
+            .clear {
+                
+                clear: both;
+                border: 1px solid black;
+                
+            }
+            
+            #figure {
+                
+                position: relative;
+                transition: background-color 1000ms;
+                
+            }
+            
+            #circle {
+                
+                position: relative;
+                background-color: white;
+                border-radius: 50%;
+                height: 50%;
+                
+            }
+            
+            body {
+                
+                margin: 0px;
+                padding: 0px;
+                
+            }
+        
+        </style>
+    
+    </head>
+    
+    <body>
+        
+        <div>
+            <div class="infoDiv">        
+                <p id="yourTime">Your time:</p> 
+            </div>
+            
+            <div class="infoDiv">
+                <p id="balls">Balls: 0</p>
+            </div>
+            
+            <div class="infoDiv">
+                <p id="allClicks">Total clicks: 0</p>
+            </div>
+            
+            <div class="infoDiv">
+                <p id="circleClicks">Circle clicks: 0</p>
+            </div>
+            
+            <div class="infoDiv">
+                <p id="yourPrecision">Your precision: 0</p>
+            </div>        
+        </div>
+        
+        <div class="clear"></div>
+        
+        <div class="mainDiv" id="main">
+            <h1 id="mainHeader">GAME OVER!</h1>
+            
+            <div id="figure">
+                
+                <div id="circle">
+                
+                    
+                    
+                </div>
+            
+            </div>
+        
+        
+        </div>
+    
+        <script type="text/javascript">
+            
+            var start = "";
+            var end = "";
+            var quantity = 1;
+            
+            var allClicks = 0;
+            var circleClicks = 0;
+            
+            createFigure();
+            
+            document.getElementById("figure").onclick = function() {
+                
+                end = (new Date() - start)/1000;
+                
+                if (start != "") {
+                    document.getElementById("yourTime").innerHTML = "Your time:" + end + "sec";
+                }
+                
+                allClicks++;
+                document.getElementById("figure").style.display = "none";
+                document.getElementById("allClicks").innerHTML = "Total clicks: " + allClicks;
+                
+            }
+            
+            document.getElementById("circle").onclick = function() {
+                
+                circleClicks++;
+                document.getElementById("circleClicks").innerHTML = "Circle clicks: " + circleClicks;
+                
+            }            
+            
+        
+            function createFigure() {
+                
+                if ((quantity - allClicks) > 5) {
+                    $("#mainHeader").fadeIn(4000);
+                    document.getElementById("figure").style.display = "none";
+                    return false;
+                }
+                
+                var redColor = Math.floor(Math.random() * 256);
+                var greenColor = Math.floor(Math.random() * 256);
+                var blueColor = Math.floor(Math.random() * 256);
+                
+                var myColor = "rgb(" + redColor + ", " + greenColor + ", " + blueColor + ")";
+                
+                var myWidthRandom = (Math.floor(Math.random() * 50) + 100);
+                var myWidth = myWidthRandom + "px";
+                var myHeight = myWidth;
+                
+                var myBorderRadius = (Math.floor(Math.random() * 50)) + "px";
+                
+                var myLeft = Math.floor(Math.random() * 90) + "%";
+                var myTop = Math.floor(Math.random() * 90) + "%";
+                
+                var circleRadius = myWidthRandom/2;
+                document.getElementById("figure").style.width = myWidth;
+                document.getElementById("figure").style.height = myWidth;
+                document.getElementById("figure").style.backgroundColor = myColor;
+                document.getElementById("figure").style.borderRadius = "50%";
+                document.getElementById("figure").style.left = myLeft;
+                document.getElementById("figure").style.top = myTop;
+                document.getElementById("figure").style.display = "block";
+                
+                document.getElementById("circle").style.height = circleRadius;
+                document.getElementById("circle").style.width = circleRadius;
+                document.getElementById("circle").style.left = circleRadius/2;
+                document.getElementById("circle").style.top = circleRadius/2;
+                
+                
+                start = new Date();
+                
+                setTimeout(createFigure, 1200);
+                
+                document.getElementById("yourPrecision").innerHTML = "Your precision: " + Math.floor((circleClicks/quantity)*100) + "%";
+                
+                document.getElementById("balls").innerHTML = "Balls: " + quantity++;
+                
+            }
+
+            
+            
+            
+        
+        </script>
+    
+    </body>
+
+</html>
